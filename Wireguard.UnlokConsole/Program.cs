@@ -33,6 +33,7 @@ using (WireGuardUDPCLient wireGuard = new WireGuardUDPCLient())
         else
         {
             structUDPData = JsonConvert.DeserializeObject<StructUDPData>(File.ReadAllText(file_json_data));
+
             Console.WriteLine("Read config");
         }
         wireGuard.Init(structUDPData);
