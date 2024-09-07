@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Runtime.InteropServices;
 using System.Text;
 using WireGuard.UnblokingLib.Structures;
 
@@ -44,8 +45,10 @@ namespace WireGuard.UnblokingLib
         IPAddress? __IPAdres = null;
         System.Net.IPEndPoint? endPoint;
         private bool IsOK = false;
-
+        public Action<string> LOGENVENT;
         private StructUDPData _structUDPData = new StructUDPData();
+
+
 
 
         public string SendData
@@ -77,9 +80,16 @@ namespace WireGuard.UnblokingLib
         }
         private void __log_err(string str)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(str);
-            Console.ForegroundColor = ConsoleColor.White;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(str);
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+
+
+
+            LOGENVENT?.Invoke(str);
         }
         public void Start()
         {
